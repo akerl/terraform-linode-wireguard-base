@@ -20,3 +20,13 @@ DEPLOY_DIR=/opt/deploy
 [[ -e "$DEPLOY_DIR" ]] && rm -rf "$DEPLOY_DIR"
 git clone "${deploy_repo}" "$DEPLOY_DIR"
 
+(
+    cd "$DEPLOY_DIR"
+    virtualenv env
+
+    export PS1=""
+    source env/bin/activate
+    pip install --force-reinstall --no-cache-dir -r requirements.txt
+
+    ansible-playbook --skip-tags users main.yml
+)
