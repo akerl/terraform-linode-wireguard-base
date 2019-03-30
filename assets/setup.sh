@@ -28,5 +28,6 @@ git clone "${deploy_repo}" "$DEPLOY_DIR"
     source env/bin/activate
     pip install --force-reinstall --no-cache-dir -r requirements.txt
 
+    touch config.cfg
     ansible-playbook --skip-tags users main.yml
 )
