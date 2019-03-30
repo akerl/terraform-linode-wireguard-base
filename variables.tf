@@ -28,6 +28,6 @@ variable "deploy_repo" {
 
 variable "source_image_id" {
   type        = "string"
-  default     = "linode/ubuntu18.10"
+  default     = "linode/ubuntu18.04"
   description = "Source image to build on"
 }
