@@ -13,10 +13,11 @@ resource "linode_instance" "vpn" {
   type   = "${var.type}"
 
   disk {
-    label           = "root"
-    size            = 10240
-    authorized_keys = ["${var.ssh_keys}"]
-    image           = "${var.source_image_id}"
+    label            = "root"
+    size             = 10240
+    authorized_keys  = ["${var.ssh_keys}"]
+    authorized_users = ["${var.ssh_users}"]
+    image            = "${var.source_image_id}"
   }
 
   config {
