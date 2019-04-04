@@ -26,7 +26,7 @@ resource "linode_instance" "vpn" {
   provisioner "ansible" {
     plays {
       playbook = {
-        file_path = "ansible/linode/bootstrap.yml"
+        file_path = "${path.module}/ansible/linode/bootstrap.yml"
       }
 
       extra_vars = {
@@ -36,7 +36,7 @@ resource "linode_instance" "vpn" {
 
     plays {
       playbook = {
-        file_path = "ansible/linode/setup.yml"
+        file_path = "${path.module}/ansible/linode/setup.yml"
       }
 
       extra_vars = {
@@ -46,7 +46,7 @@ resource "linode_instance" "vpn" {
 
     plays {
       playbook = {
-        file_path = "ansible/main.yml"
+        file_path = "${path.module}/ansible/main.yml"
         skip_tags = ["users"]
       }
 
