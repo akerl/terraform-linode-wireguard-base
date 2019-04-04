@@ -28,19 +28,11 @@ resource "linode_instance" "vpn" {
       playbook = {
         file_path = "${path.module}/ansible/linode/bootstrap.yml"
       }
-
-      extra_vars = {
-        ansible_python_interpreter = "/usr/bin/python3"
-      }
     }
 
     plays {
       playbook = {
         file_path = "${path.module}/ansible/linode/setup.yml"
-      }
-
-      extra_vars = {
-        ansible_python_interpreter = "/usr/bin/python3"
       }
     }
 
@@ -49,10 +41,16 @@ resource "linode_instance" "vpn" {
         file_path = "${path.module}/ansible/main.yml"
         skip_tags = ["users"]
       }
+    }
 
+    defaults {
       extra_vars = {
         ansible_python_interpreter = "/usr/bin/python3"
       }
+    }
+
+    ansible_ssh_settings {
+      ssh_keyscan_timeout = 360
     }
   }
 }
