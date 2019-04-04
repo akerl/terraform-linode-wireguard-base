@@ -27,12 +27,6 @@ variable "type" {
   description = "Plan type for the Linode"
 }
 
-variable "deploy_repo" {
-  type        = "string"
-  default     = "https://github.com/akerl/deploy-wireguard-server"
-  description = "Repo to use for Ansible playbook"
-}
-
 variable "source_image_id" {
   type        = "string"
   default     = "linode/ubuntu18.04"

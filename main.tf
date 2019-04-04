@@ -1,11 +1,3 @@
-data "template_file" "setup" {
-  template = "${file("${path.module}/assets/setup.sh")}"
-
-  vars {
-    deploy_repo = "${var.deploy_repo}"
-  }
-}
-
 resource "linode_instance" "vpn" {
   label = "${var.name}-wg"
 
@@ -31,17 +23,36 @@ resource "linode_instance" "vpn" {
     }
   }
 
-  provisioner "file" {
-    source      = "${path.module}/assets/sshd_config"
-    destination = "/etc/ssh/sshd_config"
-  }
+  provisioner "ansible" {
+    plays {
+      playbook = {
+        file_path = "ansible/linode/bootstrap.yml"
+      }
 
-  provisioner "file" {
-    content     = "${data.template_file.setup.rendered}"
-    destination = "/root/setup.sh"
-  }
+      extra_vars = {
+        ansible_python_interpreter = "/usr/bin/python3"
+      }
+    }
 
-  provisioner "remote-exec" {
-    inline = ["bash /root/setup.sh"]
+    plays {
+      playbook = {
+        file_path = "ansible/linode/setup.yml"
+      }
+
+      extra_vars = {
+        ansible_python_interpreter = "/usr/bin/python3"
+      }
+    }
+
+    plays {
+      playbook = {
+        file_path = "ansible/main.yml"
+        skip_tags = ["users"]
+      }
+
+      extra_vars = {
+        ansible_python_interpreter = "/usr/bin/python3"
+      }
+    }
   }
 }
