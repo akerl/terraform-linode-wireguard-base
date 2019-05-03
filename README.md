@@ -1,3 +1,5 @@
+**Deprecation notice:** This code is being replaced with a stackscript, to create VPN nodes that do not allow SSH access
+
 terraform-linode-wireguard-base
 =========
 
